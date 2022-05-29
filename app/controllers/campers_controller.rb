@@ -1,13 +1,13 @@
 class CampersController < ApplicationController
 rescue_from ActiveRecord::RecordNotFound, with: :notfound
     def index
-        camperkids = Camper.all
-        render json: camperkids.to_json, except: [:activities], status: :ok
+        @camperkids = Camper.all
+        render json: @camperkids, status: :ok
     end
 
-    def show
+    def withacts
         camperkid = Camper.find(params[:id])
-        render json: camperkid.to_json, status: 200
+        render json: camperkid, serializer: CamperidSerializer, status: 200
     end
 
 private
